@@ -64,10 +64,15 @@ from telegram.error import BadRequest, Forbidden
 
 # ================= CONFIGURATION =================
 # Best practice: Use environment variables. Fallback to hardcoded for easy testing.
-TOKEN = os.getenv("BOT_TOKEN", "7093104427:AAFwVzFAG2i2taS1Vv4YMewknKh8vN5XioM")
-ADMIN_ID = int(os.getenv("ADMIN_ID", "5958429753"))
-CHANNEL_ID = int(os.getenv("CHANNEL_ID", "-1002884487946"))
-CHANNEL_LINK = os.getenv("CHANNEL_LINK", "https://t.me/Qwopall")
+# خواندن امن اطلاعات از محیط Render
+TOKEN = os.environ.get("BOT_TOKEN")
+ADMIN_ID = int(os.environ.get("ADMIN_ID", 0))
+CHANNEL_ID = int(os.environ.get("CHANNEL_ID", 0))
+CHANNEL_LINK = os.environ.get("CHANNEL_LINK", "https://t.me/Qwopall")
+
+# اگر توکن در Render تنظیم نشده باشد، ربات ارور میده و متوجه میشی
+if not TOKEN:
+    raise ValueError("❌ توکن ربات در Environment Variables تنظیم نشده است!")
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
